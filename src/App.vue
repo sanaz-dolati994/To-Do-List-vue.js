@@ -1,5 +1,2 @@
-<template>
-  <div class="bg-blue-500 text-white p-4">Test Tailwind</div>
-</template>
-
-<script setup></script>
+import {createApp} from 'vue' import App from './App.vue'
+createApp(App).mount('#app')
