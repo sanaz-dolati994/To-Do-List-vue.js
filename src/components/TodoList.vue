@@ -4,7 +4,6 @@
       لیست وضایف
     </h1>
 
-    <!-- فرم افزودن یادآوری-->
     <div class="flex gap-2 mb-4">
       <input
         v-model="newTodo"
@@ -21,15 +20,60 @@
       </button>
     </div>
 
-    <!-- لیست یادآوری ها-->
     <div>
       <TodoItem
         v-for="todo in todos"
         :key="todo.id"
         :todo="todo"
-        @update="updateTodo"
-        @delete="deleteTodo"
+        @deleteItem="handleDelete"
+        @editeItem="handleEdite"
       />
     </div>
   </div>
 </template>
+
+<script setup>
+import { onMounted, ref, watch } from "vue";
+import TodoItem from "./TodoItem.vue";
+
+const todos = ref([]);
+onMounted(() => {
+  const saved = localStorage.getItem("todos");
+  if (saved) {
+    todos.value = JSON.parse(saved);
+  }
+});
+
+watch(
+  todos,
+  (newValue) => {
+    localStorage.setItem("todos", JSON.stringify(newValue));
+  },
+  { deep: true }
+);
+
+const newTodo = ref("");
+const addTodo = () => {
+  if (newTodo.value.trim()) {
+    todos.value.push({
+      id: Date.now(),
+      text: newTodo.value,
+      completed: false,
+    });
+    newTodo.value = "";
+  }
+};
+
+const handleDelete = (id) => {
+  todos.value = todos.value.filter((todo) => todo.id !== id);
+};
+
+const handleEdite = ({ id, text }) => {
+  todos.value = todos.value.map((todo) => {
+    if (todo.id === id) {
+      return { ...todo, text: text };
+    }
+    return todo;
+  });
+};
+</script>

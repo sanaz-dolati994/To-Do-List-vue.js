@@ -4,5 +4,8 @@
   </div>
 </template>
 <script setup>
+
 import TodoList from "./components/TodoList.vue"
+import Todoitem from "./components/TodoItem.vue"
+
 </script setup>
