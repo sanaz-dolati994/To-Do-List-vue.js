@@ -1,26 +1,27 @@
 <template>
   <div class="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
     <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">
-      لیست وضایف
+      لیست وظایف
     </h1>
-
-    <div class="flex gap-2 mb-4">
+    <div class="grid grid-cols-[1fr_auto] gap-2 mb-4">
       <input
         v-model="newTodo"
         @keyup.enter="addTodo"
         type="text"
-        placeholder="یادآوری جدید را وارد کنید"
-        class="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="وظیفه جدید را وارد کنید"
+        class="p-2 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
       />
       <button
         @click="addTodo"
-        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        type="submit"
+        class="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
       >
+        <PlusIcon class="w-4 h-4 mr-1" />
         افزودن
       </button>
     </div>
 
-    <div>
+    <div class="space-y-2">
       <TodoItem
         v-for="todo in todos"
         :key="todo.id"
@@ -33,6 +34,8 @@
 </template>
 
 <script setup>
+import { PlusIcon } from "@heroicons/vue/24/solid";
+
 import { onMounted, ref, watch } from "vue";
 import TodoItem from "./TodoItem.vue";
 
